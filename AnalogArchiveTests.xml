@@ -1,8 +1,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Test Suite" parallel="methods">
-    <test name="Test">
+<suite name="Test Suite" parallel="classes">
+    <test name="AnalogArchiveTests">
         <classes>
-            <class name="tests.AnalogArchive" />
+            <class name="tests.AnalogArchive.playFirstSong" />
+            <class name="tests.AnalogArchive.clearPlaylist" />
         </classes>
     </test>
 </suite>

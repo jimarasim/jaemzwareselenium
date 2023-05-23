@@ -5,17 +5,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
-    public WebDriver driver = null;
+    protected WebDriver driver = null;
     public BaseTest(){
         System.setProperty("webdriver.chrome.driver", "chromedriver");
     }
 
-    public WebDriver getChromeDriver(){
+    @BeforeMethod
+    public void setup(){
         driver = new ChromeDriver();
-        return driver;
     }
 
-    public void releaseDriver(WebDriver driver){
+    @AfterMethod
+    public void tearDown(){
         driver.quit();
     }
 }
