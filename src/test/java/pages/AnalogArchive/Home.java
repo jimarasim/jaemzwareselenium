@@ -1,37 +1,57 @@
-package pages;
+package pages.AnalogArchive;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.BasePage;
 
-public class AnalogArchiveHome extends BasePage {
+import java.util.List;
+
+public class Home extends BasePage {
     private WebDriver driver;
-    public AnalogArchiveHome(WebDriver driver) {
+    public Home(WebDriver driver) {
         super(driver);
         this.driver = driver;
     }
     private By clearButton = By.id("clear");
-    private By firstSongInCheckList = By.xpath("//table[@id='songsTable']//input[@type='checkbox']");
+    private By songInCheckList = By.xpath("//table[@id='songsTable']//input[@type='checkbox']");
     private By playList = By.id("analogplaylist");
+    private By songInPlayList = By.xpath("//ul[@id='analogplaylist']/li");
 
-    public AnalogArchiveHome load(){
+    public Home load(){
         driver.get("https://analogarchive.com");
-        WebElement songListDiv = tenSecondWait.until(ExpectedConditions.presenceOfElementLocated(firstSongInCheckList));
+        WebElement songListDiv = tenSecondWait.until(ExpectedConditions.presenceOfElementLocated(songInCheckList));
         return this;
     }
 
-    public AnalogArchiveHome clickFirstSong(){
-        driver.findElement(firstSongInCheckList).click();
+    public Home clickFirstSong(){
+        driver.findElement(songInCheckList).click();
         waitForSongs();
         return this;
     }
 
-    public AnalogArchiveHome clickClearButton(){
+    public Home clickClearButton(){
         driver.findElement(clearButton).click();
         tenSecondWait.until(playListItemsEmpty());
         return this;
+    }
+
+    public int playVisibleSongs(){
+        int songsChecked = 0;
+        List<WebElement> songs = driver.findElements(songInCheckList);
+        for(WebElement song : songs){
+            if (song.isDisplayed()){
+                song.click();
+                songsChecked++;
+            }
+        }
+        return songsChecked;
+    }
+
+    public int getPlaylistSongCount(){
+        return driver.findElements(songInPlayList).size();
     }
 
     public void waitForSongs() {

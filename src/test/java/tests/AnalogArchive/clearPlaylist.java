@@ -1,14 +1,16 @@
 package tests.AnalogArchive;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AnalogArchiveHome;
+import pages.AnalogArchive.Home;
 import tests.BaseTest;
 
 public class clearPlaylist extends BaseTest {
 
     @Test
     public void clearPlaylist() {
-        AnalogArchiveHome page = new AnalogArchiveHome(driver);
+        Home page = new Home(driver);
         page.load().clickFirstSong().clickClearButton();
+        Assert.assertEquals(0, page.getPlaylistSongCount());
     }
 }

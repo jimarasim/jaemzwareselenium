@@ -4,6 +4,7 @@
         <classes>
             <class name="tests.AnalogArchive.playFirstSong" />
             <class name="tests.AnalogArchive.clearPlaylist" />
+            <class name="tests.AnalogArchive.playVisibleSongs" />
         </classes>
     </test>
 </suite>

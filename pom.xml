@@ -36,6 +36,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>AnalogArchiveTests.xml</suiteXmlFile>
+                        <suiteXmlFile>StuffedAnimalWarTests.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
