@@ -1,6 +1,7 @@
 package tests;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,9 @@ public class BaseTest {
 
     @BeforeMethod
     public void setup(){
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");  // Enable headless mode
+        driver = new ChromeDriver(options);
     }
 
     @AfterMethod
