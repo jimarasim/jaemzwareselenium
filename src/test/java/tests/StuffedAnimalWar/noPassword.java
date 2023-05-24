@@ -9,7 +9,7 @@ public class noPassword extends BaseTest {
     @Test
     public void noPassword(){
         Home page = new Home(driver);
-        page.load().clickGoButtonNoPassword();
+        page.load().clickGoButton();
         Assert.assertTrue(page.isPasswordTextBoxEnabled());
     }
 }

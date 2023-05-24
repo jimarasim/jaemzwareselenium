@@ -10,7 +10,7 @@ public class playVisibleSongs extends BaseTest {
     @Test
     public void playVisibleSongs() {
         Home page = new Home(driver);
-        int songsChecked = page.load().playVisibleSongs();
+        int songsChecked = page.load().clickVisibleSongs();
         Assert.assertEquals(songsChecked, page.getPlaylistSongCount());
     }
 

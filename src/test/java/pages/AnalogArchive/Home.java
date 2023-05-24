@@ -34,11 +34,11 @@ public class Home extends BasePage {
 
     public Home clickClearButton(){
         driver.findElement(clearButton).click();
-        tenSecondWait.until(playListItemsEmpty());
+        tenSecondWait.until(waitForPlayListItemsEmpty());
         return this;
     }
 
-    public int playVisibleSongs(){
+    public int clickVisibleSongs(){
         int songsChecked = 0;
         List<WebElement> songs = driver.findElements(songInCheckList);
         for(WebElement song : songs){
@@ -55,17 +55,17 @@ public class Home extends BasePage {
     }
 
     public void waitForSongs() {
-        tenSecondWait.until(playListItemsGreaterThan(0));
+        tenSecondWait.until(waitForPlayListItemsGreaterThan(0));
     }
 
-    private ExpectedCondition<Boolean> playListItemsGreaterThan(int count) {
+    private ExpectedCondition<Boolean> waitForPlayListItemsGreaterThan(int count) {
         return driver -> {
             WebElement unorderedList = driver.findElement(playList);
             return unorderedList.findElements(By.tagName("li")).size() > count;
         };
     }
 
-    private ExpectedCondition<Boolean> playListItemsEmpty() {
+    private ExpectedCondition<Boolean> waitForPlayListItemsEmpty() {
         return driver -> {
             WebElement unorderedList = driver.findElement(playList);
             return unorderedList.findElements(By.tagName("li")).size() == 0;
