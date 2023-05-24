@@ -22,7 +22,7 @@ public class Home extends BasePage {
 
     public Home load(){
         driver.get("https://analogarchive.com");
-        WebElement songListDiv = tenSecondWait.until(ExpectedConditions.presenceOfElementLocated(songInCheckList));
+        WebElement songListDiv = wait.until(ExpectedConditions.presenceOfElementLocated(songInCheckList));
         return this;
     }
 
@@ -34,7 +34,7 @@ public class Home extends BasePage {
 
     public Home clickClearButton(){
         driver.findElement(clearButton).click();
-        tenSecondWait.until(waitForPlayListItemsEmpty());
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(songInPlayList));
         return this;
     }
 
@@ -55,20 +55,13 @@ public class Home extends BasePage {
     }
 
     public void waitForSongs() {
-        tenSecondWait.until(waitForPlayListItemsGreaterThan(0));
+        wait.until(waitForPlayListItemsGreaterThan(0));
     }
 
     private ExpectedCondition<Boolean> waitForPlayListItemsGreaterThan(int count) {
         return driver -> {
             WebElement unorderedList = driver.findElement(playList);
             return unorderedList.findElements(By.tagName("li")).size() > count;
-        };
-    }
-
-    private ExpectedCondition<Boolean> waitForPlayListItemsEmpty() {
-        return driver -> {
-            WebElement unorderedList = driver.findElement(playList);
-            return unorderedList.findElements(By.tagName("li")).size() == 0;
         };
     }
 }

@@ -2,8 +2,6 @@ package pages.StuffedAnimalWar;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
@@ -20,8 +18,8 @@ public class Home extends BasePage {
 
     public Home load() {
         driver.get("https://stuffedanimalwar.com");
-        tenSecondWait.until(ExpectedConditions.presenceOfElementLocated(passwordTextBox));
-        tenSecondWait.until(ExpectedConditions.presenceOfElementLocated(goButton));
+        wait.until(ExpectedConditions.presenceOfElementLocated(passwordTextBox));
+        wait.until(ExpectedConditions.presenceOfElementLocated(goButton));
         return this;
     }
 
@@ -40,6 +38,6 @@ public class Home extends BasePage {
     }
 
     public void waitForPasswordTextBoxNotDisplayed(){
-        tenSecondWait.until(ExpectedConditions.invisibilityOfElementLocated(passwordTextBox));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(passwordTextBox));
     }
 }

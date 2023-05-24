@@ -6,8 +6,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class BasePage {
-    protected WebDriverWait tenSecondWait;
+    protected WebDriverWait wait;
     public BasePage(WebDriver driver){
-        tenSecondWait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 10);
     }
 }
