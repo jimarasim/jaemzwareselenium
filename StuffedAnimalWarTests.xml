@@ -3,6 +3,7 @@
     <test name="StuffedAnimalWarTests">
         <classes>
             <class name="tests.StuffedAnimalWar.noPassword" />
+            <class name="tests.StuffedAnimalWar.validPassword" />
         </classes>
     </test>
 </suite>
