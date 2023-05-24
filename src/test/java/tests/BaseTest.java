@@ -33,7 +33,7 @@ public class BaseTest {
             File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
 
             // Define the destination file path
-            String destinationPath = "./" + result.getName() + ".png";
+            String destinationPath = "./screenshots/" + result.getName() + ".png";
 
             try {
                 // Copy the screenshot file to the destination path
