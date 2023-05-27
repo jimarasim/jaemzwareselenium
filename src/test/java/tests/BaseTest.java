@@ -21,10 +21,9 @@ public class BaseTest {
 
     @BeforeMethod
     public void setup(){
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");  // Enable headless mode
-//        driver = new ChromeDriver(options);
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");  // Enable headless mode
+        driver = new ChromeDriver(options);
     }
 
     @AfterMethod

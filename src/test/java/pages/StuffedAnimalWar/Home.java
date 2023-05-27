@@ -37,7 +37,8 @@ public class Home extends BasePage {
         return this;
     }
 
-    public void waitForPasswordTextBoxNotDisplayed(){
+    public BasePage waitForPasswordTextBoxNotDisplayed(){
         wait.until(ExpectedConditions.invisibilityOfElementLocated(passwordTextBox));
+        return new BasePage(driver);
     }
 }

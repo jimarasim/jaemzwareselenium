@@ -8,7 +8,7 @@ import tests.BaseTest;
 public class clearPlaylist extends BaseTest {
 
     @Test
-    public void clearPlaylist() {
+    public void clearPlaylistTest() {
         Home page = new Home(driver);
         page.load().clickFirstSong().clickClearButton();
         Assert.assertEquals(0, page.getPlaylistSongCount());

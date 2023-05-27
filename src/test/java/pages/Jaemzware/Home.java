@@ -17,7 +17,7 @@ public class Home extends BasePage {
         this.driver = driver;
     }
 
-    private By jaemzwareHeader = By.xpath("//h1[text()[contains(.,'jaemzware llc')]]");
+    private By jaemzwareHeader = By.xpath("//h1[text()[contains(.,'current projects')]]");
     private By phonewordsLink = By.id("phonewordslink");
 
     public Home load() {

@@ -7,7 +7,7 @@ import tests.BaseTest;
 
 public class noPassword extends BaseTest {
     @Test
-    public void noPassword(){
+    public void noPasswordTest(){
         Home page = new Home(driver);
         page.load().clickGoButton();
         Assert.assertTrue(page.isPasswordTextBoxEnabled());

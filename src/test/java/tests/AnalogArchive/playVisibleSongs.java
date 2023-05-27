@@ -8,7 +8,7 @@ import tests.BaseTest;
 public class playVisibleSongs extends BaseTest {
 
     @Test
-    public void playVisibleSongs() {
+    public void playVisibleSongsTest() {
         Home page = new Home(driver);
         int songsChecked = page.load().clickVisibleSongs();
         Assert.assertEquals(songsChecked, page.getPlaylistSongCount());

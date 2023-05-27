@@ -8,7 +8,7 @@ import tests.BaseTest;
 public class load extends BaseTest {
 
     @Test
-    public void load(){
+    public void loadTest(){
         Home page = new Home(driver);
         page.load();
         Assert.assertTrue(page.isJaemzwareHeaderPresent());
