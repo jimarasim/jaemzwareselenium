@@ -42,6 +42,7 @@ public class BaseTest {
                 // Copy the screenshot file to the destination path
                 Files.copy(srcFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Screenshot saved: " + destinationPath);
+                System.out.println(driver.getPageSource());
             } catch (IOException e) {
                 e.printStackTrace();
             }
