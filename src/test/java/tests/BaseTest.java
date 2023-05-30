@@ -2,6 +2,7 @@ package tests;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.openqa.selenium.WebDriver;
@@ -16,14 +17,22 @@ import java.nio.file.StandardCopyOption;
 public class BaseTest {
     protected WebDriver driver = null;
     public BaseTest(){
+
         System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
     }
 
     @BeforeMethod
     public void setup(){
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");  // Enable headless mode
-        driver = new ChromeDriver(options);
+        String browser = System.getProperty("browser"); //passed through maven with -Dbrowser
+        if (browser==null || browser.equals("chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");  // Enable headless mode
+            driver = new ChromeDriver(options);
+        } else if (browser.equals("safari")){
+            driver = new SafariDriver();
+        } else{
+            throw new IllegalArgumentException("INVALID BROWSER SPECIFIED: " + browser + ". PLEASE USE: safari OR chrome");
+        }
     }
 
     @AfterMethod
