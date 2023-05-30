@@ -22,6 +22,7 @@ public class Home extends BasePage {
 
     public Home load() {
         driver.get("https://jaemzware.com");
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(jaemzwareHeader)));
         return this;
     }
 
@@ -30,12 +31,20 @@ public class Home extends BasePage {
     }
 
     public Phonewords clickPhonewordsLink(){
+        String currentWindowHandle = driver.getWindowHandle();
         driver.findElement(phonewordsLink).click();
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        //Set<String> does not guarantee order of window handles
         Set<String> windowHandles = driver.getWindowHandles();
-        List<String> list = new ArrayList<>(windowHandles);
-        driver.switchTo().window(list.get(1));
-        return new Phonewords(driver);
+        List<String> windowHandlesList = new ArrayList<>(windowHandles);
+        for(String handle : windowHandlesList){
+            if(currentWindowHandle != handle){
+                driver.switchTo().window(handle);
+            }
+        }
+        Phonewords phonewords = new Phonewords(driver);
+        phonewords.waitForPhoneNumberTextBox();
+        return phonewords;
     }
 
 }

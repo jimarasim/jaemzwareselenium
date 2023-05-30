@@ -2,6 +2,7 @@ package pages.Jaemzware;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 public class Phonewords extends BasePage {
@@ -17,11 +18,6 @@ public class Phonewords extends BasePage {
     private By prefixDropdown = By.id("prefix");
     private By suffixDropdown = By.id("suffix");
 
-    public Phonewords load() {
-        driver.get("https://jaemzware.com/phonewords");
-        return this;
-    }
-
     public Phonewords sendKeysToPhonenumber(String phonenumber){
         driver.findElement(phoneNumberTextBox).sendKeys(phonenumber);
         return this;
@@ -33,5 +29,10 @@ public class Phonewords extends BasePage {
                 driver.findElement(prefixDropdown).isEnabled() &&
                 driver.findElement(suffixDropdown).isEnabled();
         return isPhonenumberChoiceAvailable;
+    }
+
+    public Phonewords waitForPhoneNumberTextBox(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(phoneNumberTextBox));
+        return this;
     }
 }
