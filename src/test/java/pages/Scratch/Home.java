@@ -2,7 +2,10 @@ package pages.Scratch;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.BasePage;
 
 public class Home extends BasePage {
@@ -21,5 +24,17 @@ public class Home extends BasePage {
         driver.findElement(iCloseButton).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(iCloseButton));
         return this;
+    }
+
+    public void waitForBatchJob() {
+        WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(waitForBatchJobComplete());
+    }
+
+    private ExpectedCondition<Boolean> waitForBatchJobComplete() {
+        return driver -> {
+            WebElement flag = driver.findElement(By.id("BATCH_JOB_STAT_FLG"));
+            return flag.getText() == "Complete";
+        };
     }
 }

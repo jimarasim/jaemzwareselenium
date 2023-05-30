@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption;
 public class BaseTest {
     protected WebDriver driver = null;
     public BaseTest(){
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
     }
 
     @BeforeMethod
