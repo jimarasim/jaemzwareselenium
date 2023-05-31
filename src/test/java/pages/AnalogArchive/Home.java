@@ -10,10 +10,8 @@ import pages.BasePage;
 import java.util.List;
 
 public class Home extends BasePage {
-    private WebDriver driver;
     public Home(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
     private By clearButton = By.id("clear");
     private By songInCheckList = By.xpath("//table[@id='songsTable']//input[@type='checkbox']");
