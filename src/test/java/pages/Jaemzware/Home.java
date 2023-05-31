@@ -5,20 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 public class Home extends BasePage {
-    private WebDriver driver;
 
     public Home(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     private By jaemzwareHeader = By.xpath("//h1[text()[contains(.,'current projects')]]");
     private By phonewordsLink = By.id("phonewordslink");
+    private By skatecreteordieLink = By.xpath("//a[text()[contains(.,'skate')]]");
 
     public Home load() {
         driver.get("https://jaemzware.com");
@@ -31,20 +26,16 @@ public class Home extends BasePage {
     }
 
     public Phonewords clickPhonewordsLink(){
-        String currentWindowHandle = driver.getWindowHandle();
         driver.findElement(phonewordsLink).click();
-        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
-        //Set<String> does not guarantee order of window handles
-        Set<String> windowHandles = driver.getWindowHandles();
-        List<String> windowHandlesList = new ArrayList<>(windowHandles);
-        for(String handle : windowHandlesList){
-            if(currentWindowHandle != handle){
-                driver.switchTo().window(handle);
-            }
-        }
+        switchToWindowHandleWithTitle("Phone Words");
         Phonewords phonewords = new Phonewords(driver);
         phonewords.waitForPhoneNumberTextBox();
         return phonewords;
     }
 
+    public Skatecreteordie clickSkatecreteordieLink(){
+        driver.findElement(skatecreteordieLink).click();
+        switchToWindowHandleWithTitle("skatecreteordie iOS App");
+        return new Skatecreteordie(driver);
+    }
 }

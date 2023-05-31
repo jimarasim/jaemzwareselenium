@@ -6,11 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 public class Phonewords extends BasePage {
-    private WebDriver driver;
 
     public Phonewords(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     private By phoneNumberTextBox = By.id("phonenumber");

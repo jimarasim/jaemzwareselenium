@@ -1,15 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Jaemzware Test Suite" parallel="classes" thread-count="1">
+<suite name="Jaemzware Test Suite" parallel="classes" thread-count="3">
+<!--<suite name="Jaemzware Test Suite">-->
     <test name="JaemzwareTests">
         <classes>
             <class name="tests.Jaemzware.load" />
             <class name="tests.Jaemzware.phonewords" />
+            <class name="tests.Jaemzware.skatecreteordie" />
         </classes>
     </test>
     <test name="StuffedAnimalWarTests">
         <classes>
             <class name="tests.StuffedAnimalWar.noPassword" />
-            <class name="tests.StuffedAnimalWar.validPassword" />
+            <class name="tests.StuffedAnimalWar.validPasswordForImage" />
+            <class name="tests.StuffedAnimalWar.validPasswordForMusic" />
         </classes>
     </test>
     <test name="AnalogArchiveTests">

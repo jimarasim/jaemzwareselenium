@@ -5,10 +5,8 @@ import org.openqa.selenium.WebDriver;
 import pages.BasePage;
 
 public class Analog extends BasePage {
-    private WebDriver driver;
     public Analog(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
     private By analogPlayerNextPage = By.id("next");
 

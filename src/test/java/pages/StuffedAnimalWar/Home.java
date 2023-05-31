@@ -6,11 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 public class Home extends BasePage {
-    private WebDriver driver;
 
     public Home(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     private By passwordTextBox = By.id("password");
