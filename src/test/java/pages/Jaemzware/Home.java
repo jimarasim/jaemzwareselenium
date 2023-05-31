@@ -36,6 +36,8 @@ public class Home extends BasePage {
     public Skatecreteordie clickSkatecreteordieLink(){
         driver.findElement(skatecreteordieLink).click();
         switchToWindowHandleWithTitle("skatecreteordie iOS App");
+        Skatecreteordie skatecreteordie = new Skatecreteordie(driver);
+        skatecreteordie.waitForRootDiv();
         return new Skatecreteordie(driver);
     }
 }

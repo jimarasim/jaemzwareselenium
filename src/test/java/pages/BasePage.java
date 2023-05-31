@@ -19,7 +19,8 @@ public class BasePage {
     protected void switchToWindowHandleWithTitle(String title) throws InvalidArgumentException{
         for(String handle : driver.getWindowHandles()){
             driver.switchTo().window(handle);
-            if(driver.getTitle().equals(title)){
+            String windowTitle = driver.getTitle();
+            if(windowTitle.equals(title) || windowTitle.equals("") ){
                 System.out.println("TITLE:" + driver.getTitle() + "FOUND");
                 return;
             } else{
