@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!--SAFARI CANNOT RUN PARALLEL ON SAME MACHINE; MUST BE DONE THROUGH REMOTE WEBDRIVER-->
-<!--<suite name="Jaemzware Test Suite" parallel="classes" thread-count="3">-->
-<suite name="Jaemzware Test Suite">
+<suite name="Jaemzware Test Suite" parallel="classes" thread-count="3">
+<!--<suite name="Jaemzware Test Suite">-->
     <test name="JaemzwareTests">
         <classes>
             <class name="tests.Jaemzware.load" />

@@ -15,6 +15,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class BaseTest {
     protected WebDriver driver = null;
     @BeforeMethod
@@ -38,24 +43,104 @@ public class BaseTest {
     @AfterMethod
     public void tearDown(ITestResult result){
         if (result.getStatus() == ITestResult.FAILURE) {
-            // Cast the WebDriver instance to TakesScreenshot
-            TakesScreenshot screenshot = (TakesScreenshot) driver;
-
-            // Capture the screenshot as a file
-            File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
-
-            // Define the destination file path
-            String destinationPath = "./screenshots/" + result.getName() + ".png";
-
-            try {
-                // Copy the screenshot file to the destination path
-                Files.copy(srcFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Screenshot saved: " + destinationPath);
-                System.out.println(driver.getPageSource());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            captureFailureScreenshot(result.getName());
+        } else{
+            captureSuccessScreenshot(result.getName());
         }
         driver.quit();
     }
+
+    private void captureFailureScreenshot(String testName){
+        // Cast the WebDriver instance to TakesScreenshot
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+
+        // Capture the screenshot as a file
+        File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
+
+        // Define the destination file path
+        String destinationPath = "./screenshots/" + testName + "FAILED.png";
+
+        try {
+            // Copy the screenshot file to the destination path
+            Files.copy(srcFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Screenshot saved: " + destinationPath);
+            System.out.println(driver.getPageSource());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String successPath = "./screenshots/" + testName + "SUCCESS.png";
+        if(new File(successPath).exists()){
+            screenshotComparison(testName, successPath, destinationPath);
+        }
+    }
+
+    private void captureSuccessScreenshot(String testName){
+        // Cast the WebDriver instance to TakesScreenshot
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+
+        // Capture the screenshot as a file
+        File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
+
+        // Define the destination file path
+        String destinationPath = "./screenshots/" + testName + "SUCCESS.png";
+
+        if(new File(destinationPath).exists()){
+            destinationPath = destinationPath.replace("SUCCESS", "LATEST");
+        }
+
+        try {
+            // Copy the screenshot file to the destination path
+            Files.copy(srcFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Screenshot saved: " + destinationPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(destinationPath.contains("LATEST")){
+            screenshotComparison(testName, destinationPath.replace("LATEST", "SUCCESS"), destinationPath);
+        }
+    }
+
+    private void screenshotComparison(String testName, String screenshot1Path, String screenshot2Path) {
+
+        try {
+            BufferedImage screenshot1 = ImageIO.read(new File(screenshot1Path));
+            BufferedImage screenshot2 = ImageIO.read(new File(screenshot2Path));
+
+            int width = screenshot1.getWidth();
+            int height = screenshot1.getHeight();
+
+            BufferedImage diffImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+            int diffPixels = 0;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int pixel1 = screenshot1.getRGB(x, y);
+                    int pixel2 = screenshot2.getRGB(x, y);
+
+                    if (pixel1 != pixel2) {
+                        // Set pixel color to highlight the difference
+                        diffImage.setRGB(x, y, 0xFF0000); // Red color
+                        diffPixels++;
+                    } else {
+                        // Set pixel color to be the same as original
+                        diffImage.setRGB(x, y, pixel1);
+                    }
+                }
+            }
+
+            // Save the difference image
+            String diffImagePath = "./screenshots/" + testName + "COMPARISON.png";;
+            ImageIO.write(diffImage, "png", new File(diffImagePath));
+
+            System.out.println("SCREENSHOT COMPARISON DIFF PIXELS: " + diffPixels);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
