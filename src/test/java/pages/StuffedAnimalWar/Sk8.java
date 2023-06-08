@@ -13,6 +13,11 @@ public class Sk8 extends BasePage {
     }
     private By lightGirlImage = By.xpath("//img[@src='https://stuffedanimalwar.com/images/lightgirl.jpeg']");
 
+    public void waitForPageToLoad(int timeoutInSeconds) {
+        super.waitForPageToLoad(timeoutInSeconds);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img")));
+    }
+
     public boolean isLightGirlDisplayed(){
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(lightGirlImage)));
         return driver.findElement(lightGirlImage).isDisplayed();
