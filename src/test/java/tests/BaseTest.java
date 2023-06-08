@@ -137,7 +137,8 @@ public class BaseTest {
 
             System.out.println("SCREENSHOT COMPARISON DIFF PIXELS: " + diffPixels);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println("SCREENSHOT EXCEPTION:"+ e.getMessage());
             e.printStackTrace();
         }
     }

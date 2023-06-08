@@ -13,6 +13,7 @@
         <classes>
             <class name="tests.StuffedAnimalWar.noPassword" />
             <class name="tests.StuffedAnimalWar.validPasswordForImage" />
+            <class name="tests.StuffedAnimalWar.validPasswordForSk8" />
             <class name="tests.StuffedAnimalWar.validPasswordForMusic" />
         </classes>
     </test>
