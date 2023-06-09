@@ -5,9 +5,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
@@ -22,13 +24,13 @@ import java.io.IOException;
 
 public class BaseTest {
     protected WebDriver driver = null;
-    @BeforeMethod
+    @BeforeClass
     public void setup(){
         String browser = System.getProperty("browser"); //passed through maven with -Dbrowser
         if (browser==null || browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");  // Enable headless mode
+//            options.addArguments("--headless");  // Enable headless mode
             options.addArguments("--mute-audio");
             driver = new ChromeDriver(options);
         } else if (browser.equals("safari")){
@@ -42,12 +44,15 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result){
+    public void finalScreenShot(ITestResult result){
         if (result.getStatus() == ITestResult.FAILURE) {
             captureFailureScreenshot(result.getName());
         } else{
             captureSuccessScreenshot(result.getName());
         }
+    }
+    @AfterClass
+    public void tearDown(){
         driver.quit();
     }
 
