@@ -16,6 +16,7 @@ public class validPasswordForImage extends BaseTest {
                 {"beathappeningdreamy", "beatIMG_E8481.JPG"},
                 {"deadcandancespiritchaser", "dcdIMG_E8477.JPG"},
                 {"ianbrownmyway", "ianIMG_E8468.JPG"},
+                {"misfitsearthad", "misfitsIMG_E8504.JPG"},
         };
     }
     @Test(dataProvider = "imageData")
@@ -24,6 +25,7 @@ public class validPasswordForImage extends BaseTest {
         page.load().enterPassword(password).clickGoButton().waitForPasswordTextBoxNotDisplayed();
         Image imagePage = new Image(driver);
         imagePage.waitForPageToLoad(30);
+        System.out.println("PASSWORD:"+password);
         Assert.assertTrue(imagePage.isImageDisplayed(anImageName));
     }
 }
