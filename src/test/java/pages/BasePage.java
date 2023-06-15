@@ -29,4 +29,10 @@ public class BasePage {
         }
         throw new InvalidArgumentException("WINDOW WITH TITLE NOT FOUND:" + title);
     }
+
+    protected void scrollToBottomOfPage(){
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
 }
