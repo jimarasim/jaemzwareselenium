@@ -12,8 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -21,6 +20,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BaseTest {
     protected WebDriver driver = null;
@@ -149,5 +151,21 @@ public class BaseTest {
         }
     }
 
+    protected String printHtmlReport(String htmlReportData){
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        Date date = new Date();
+        String dateStamp = dateFormat.format(date);
+        String fileName = "index" + dateStamp + ".html";
+        File file = new File("reports", fileName);
+        try{
+            FileWriter writer = new FileWriter(file);
+            writer.write(htmlReportData);
+            writer.close();
+            System.out.println("open reports/" + fileName);
+        }catch(Exception ex){
+            System.out.println("EXCEPTION WRITING REPORT: " + ex.getMessage());
+        }
+        return fileName;
+    }
 
 }

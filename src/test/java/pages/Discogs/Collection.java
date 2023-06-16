@@ -27,16 +27,13 @@ public class Collection extends BasePage {
         return this;
     }
 
-    public Collection printCollectionPage(){
+    public StringBuilder getCollectionPageRows(){
         List<WebElement> releaseTableRows = driver.findElements(By.xpath(releaseTableRowXpath));
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<html><head><title>sk8creteordie collection</title></head><body><table>");
         for(WebElement row : releaseTableRows){
-            stringBuilder.append("<tr><td>"+row.getText()+"</td></tr>");
+            stringBuilder.append("<tr><td style=\"border: 1px solid black;\">"+row.getText()+"</td></tr>");
         }
-        stringBuilder.append("</table></body></html>");
-        System.out.println(stringBuilder.toString());
-        return this;
+        return stringBuilder;
     }
 
     public boolean clickNext(){
