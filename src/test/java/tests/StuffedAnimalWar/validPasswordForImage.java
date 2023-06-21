@@ -17,6 +17,7 @@ public class validPasswordForImage extends BaseTest {
                 {"deadcandancespiritchaser", "dcdIMG_E8477.JPG"},
                 {"ianbrownmyway", "ianIMG_E8468.JPG"},
                 {"misfitsearthad", "misfitsIMG_E8504.JPG"},
+                {"fatboyslimyouvecomealongw", "IMG_8593.JPG"},
         };
     }
     @Test(dataProvider = "imageData")
