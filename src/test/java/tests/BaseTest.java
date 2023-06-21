@@ -32,7 +32,7 @@ public class BaseTest {
         if (browser==null || browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
             ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--headless");  // Enable headless mode
+            options.addArguments("--headless");  // Enable headless mode
             options.addArguments("--mute-audio");
             driver = new ChromeDriver(options);
         } else if (browser.equals("safari")){

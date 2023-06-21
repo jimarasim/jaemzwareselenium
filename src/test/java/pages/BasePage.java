@@ -17,7 +17,7 @@ public class BasePage {
 
     public BasePage(WebDriver driver){
         this.driver = driver;
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 60);
     }
     public void waitForPageToLoad(int timeoutInSeconds) {
         wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
