@@ -16,6 +16,11 @@ public class Collection extends BasePage {
         super(driver);
     }
 
+    private String minimumPriceXpath = "//td[@data-header='Min']";
+    private String mediumPriceXpath = "//td[@data-header='Med']";
+    private String maximumPriceXpath = "//td[@data-header='Max']";
+    private String artistAlbumXpath = "//div[@class='collection-card-title']";
+    private String mediaFormatXpath = "//span[@class='collection-card-data']";
     private String releaseTableRowXpath = "//tr[contains(@class,'collection-row')]";
     private By next = By.xpath("/.//div[@class='responsive_wrap ']//a[@class='pagination_next']");
     private By loginLink = By.id("log_in_link");
@@ -27,11 +32,39 @@ public class Collection extends BasePage {
         return this;
     }
 
-    public StringBuilder getCollectionPageRows(){
+    public StringBuilder getCollectionPageRowsAsHtml(){
         List<WebElement> releaseTableRows = driver.findElements(By.xpath(releaseTableRowXpath));
         StringBuilder stringBuilder = new StringBuilder();
-        for(WebElement row : releaseTableRows){
-            stringBuilder.append("<tr><td style=\"border: 1px solid black;\">"+row.getText()+"</td></tr>");
+        for(int i=1; i <= releaseTableRows.size(); i++){
+            String minimumPriceString = "";
+            String mediumPriceString = "";
+            String maximumPriceString = "";
+            String artistAlbumString = driver.findElement(By.xpath(releaseTableRowXpath + "["+i+"]" + artistAlbumXpath)).getText();
+            String mediaFormatString = driver.findElement(By.xpath(releaseTableRowXpath + "["+i+"]" + mediaFormatXpath)).getText();
+            if(driver.findElements(By.xpath(releaseTableRowXpath + "["+i+"]" + minimumPriceXpath)).size() > 0){
+                minimumPriceString = driver.findElement(By.xpath(releaseTableRowXpath + "["+i+"]" + minimumPriceXpath)).getText();
+            }
+            if(driver.findElements(By.xpath(releaseTableRowXpath + "["+i+"]" + mediumPriceXpath)).size() > 0){
+                mediumPriceString = driver.findElement(By.xpath(releaseTableRowXpath + "["+i+"]" + mediumPriceXpath)).getText();
+            }
+            if(driver.findElements(By.xpath(releaseTableRowXpath + "["+i+"]" + maximumPriceXpath)).size() > 0){
+                maximumPriceString = driver.findElement(By.xpath(releaseTableRowXpath + "["+i+"]" + maximumPriceXpath)).getText();
+            }
+            stringBuilder.append("<tr>" +
+                    "<td style=\"border: 1px solid black;\">"+artistAlbumString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+mediaFormatString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+minimumPriceString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+mediumPriceString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+maximumPriceString+"</td>" +
+                    "</tr>");
+//            stringBuilder.append("<tr><td style=\"border: 1px solid black;\">"+row.getText()+"</td></tr>");
+            System.out.println("<tr>" +
+                    "<td style=\"border: 1px solid black;\">"+artistAlbumString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+mediaFormatString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+minimumPriceString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+mediumPriceString+"</td>" +
+                    "<td style=\"border: 1px solid black;\">"+maximumPriceString+"</td>" +
+                    "</tr>");
         }
         return stringBuilder;
     }
