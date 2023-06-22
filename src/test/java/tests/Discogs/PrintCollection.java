@@ -24,7 +24,7 @@ public class PrintCollection extends BaseTest {
         collection.load().
                 clickloginLink().
                 sendKeysToUserName("sk8creteordie").
-                sendKeysToPassword("D1ssC0gGZ5").
+                sendKeysToPassword("").
                 clickLoginButton();
         do {
             contentStringBuilder.append(collection.getCollectionPageRowsAsHtml());
