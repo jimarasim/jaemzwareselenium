@@ -1,13 +1,11 @@
 package tests;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -32,7 +30,7 @@ public class BaseTest {
         if (browser==null || browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");  // Enable headless mode
+//            options.addArguments("--headless");  // Enable headless mode
             options.addArguments("--mute-audio");
             driver = new ChromeDriver(options);
         } else if (browser.equals("safari")){
@@ -50,7 +48,7 @@ public class BaseTest {
         if (result.getStatus() == ITestResult.FAILURE) {
             captureFailureScreenshot(result.getName());
         } else{
-            captureSuccessScreenshot(result.getName());
+
         }
     }
     @AfterClass
@@ -166,6 +164,28 @@ public class BaseTest {
             System.out.println("EXCEPTION WRITING REPORT: " + ex.getMessage());
         }
         return fileName;
+    }
+
+    protected String getTextIfElementExists(String xpath) {
+        try {
+            WebElement we = driver.findElement(By.xpath(xpath));
+            return we.getText();
+        } catch (Exception ex) {
+            return "N/A";
+        }
+    }
+
+    protected String getAttributeIfElementExists(String xpath, String attribute) {
+        try {
+            WebElement we = driver.findElement(By.xpath(xpath));
+            return we.getAttribute(attribute);
+        } catch (Exception ex) {
+            return "N/A";
+        }
+    }
+
+    protected boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
     }
 
 }
