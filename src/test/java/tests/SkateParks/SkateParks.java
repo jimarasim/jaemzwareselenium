@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class SkateParks extends BaseTest {
 
@@ -58,6 +59,27 @@ public class SkateParks extends BaseTest {
     @Test
     public void Grindline() throws Exception{
         String parks[] = {
+        "http://grindline.com/skateparks/4-directions-skatepark/",
+        "http://grindline.com/skateparks/oceanside-alex-foussat/",
+        "http://grindline.com/skateparks/athens/",
+        "http://grindline.com/skateparks/aztec/",
+        "http://grindline.com/skateparks/bakersfield-skatepark-expansion-bakersfield-ca/",
+        "http://grindline.com/skateparks/mammoth-lakes/",
+        "http://grindline.com/skateparks/buffalo/",
+        "http://grindline.com/skateparks/carbondale/",
+        "http://grindline.com/skateparks/aurora-city-park/",
+        "http://grindline.com/skateparks/cody/",
+        "http://grindline.com/skateparks/corpus-christi/",
+        "http://grindline.com/skateparks/crooked-river-skate-park-cleveland-oh/",
+        "http://grindline.com/skateparks/currituck-county/",
+        "http://grindline.com/skateparks/de-vargas-park/",
+        "http://grindline.com/skateparks/duck-pond/",
+        "http://grindline.com/skateparks/edina/",
+        "http://grindline.com/skateparks/edwards/",
+        "http://grindline.com/skateparks/erie/",
+        "http://grindline.com/skateparks/fairplay/",
+        "http://grindline.com/skateparks/farmington-hills/",
+        "http://grindline.com/skateparks/fayetteville/",
         "http://grindline.com/skateparks/freedom-park/",
         "http://grindline.com/skateparks/g-hysmith-skate-park-college-station-tx/",
         "http://grindline.com/skateparks/galveston/",
@@ -147,6 +169,94 @@ public class SkateParks extends BaseTest {
         WriteContentsToWebPage(results, "grindline");
     }
 
+    @Test
+    public void Evergreen() throws Exception{
+        String parks[] = {
+                "https://www.evergreenskateparks.com/alberton-montana-skatepark",
+                "https://www.evergreenskateparks.com/belding",
+                "https://www.evergreenskateparks.com/big-sandy-montana-skatepark-phase-2",
+                "https://www.evergreenskateparks.com/box-elder-montana-skatepark",
+                "https://www.evergreenskateparks.com/bozeman-montana-skatepark",
+                "https://www.evergreenskateparks.com/buffalo-new-york-skate-plaza",
+                "https://www.evergreenskateparks.com/camp-wood-kansas",
+                "https://www.evergreenskateparks.com/carbondale-colorado-skatepark-phase-2",
+                "https://www.evergreenskateparks.com/cashmere-washington-skatepark",
+                "https://www.evergreenskateparks.com/clawson-michigan-skatepark",
+                "https://www.evergreenskateparks.com/coeur-dalene-idaho-skatepark",
+                "https://www.evergreenskateparks.com/crow-creek-skatepark-fort-thompson",
+                "https://www.evergreenskateparks.com/darby-montana-skatepark",
+                "https://www.evergreenskateparks.com/douglas-wyoming-skatepark",
+                "https://www.evergreenskateparks.com/eau-claire-wisconsin-skatepark",
+                "https://www.evergreenskateparks.com/epworth-skatepark-delaware",
+                "https://www.evergreenskateparks.com/ferndale-michigan-skatepark",
+                "https://www.evergreenskateparks.com/fort-morgan-colorado-skatepark",
+                "https://www.evergreenskateparks.com/frankfort-michigan",
+                "https://www.evergreenskateparks.com/fredericksburg-texas-skatepark",
+                "https://www.evergreenskateparks.com/frisco-colorado-skatepark",
+                "https://www.evergreenskateparks.com/goat-bowl-sonoma",
+                "https://www.evergreenskateparks.com/hamilton-montana-skatepark",
+                "https://www.evergreenskateparks.com/havre-montana-skatepark",
+                "https://www.evergreenskateparks.com/hays-montana-skatepark",
+                "https://www.evergreenskateparks.com/hernando-mississippi-skatepark",
+                "https://www.evergreenskateparks.com/howard-heuston-boulder-colorado",
+                "https://www.evergreenskateparks.com/idalou-texas-skatepark",
+                "https://www.evergreenskateparks.com/johnson-city-skatepark",
+                "https://www.evergreenskateparks.com/laytonville-california-skatepark",
+                "https://www.evergreenskateparks.com/lewistown-montana-skatepark",
+                "https://www.evergreenskateparks.com/lincoln-montana-skatepark",
+                "https://www.evergreenskateparks.com/livingston-montana-skatepark",
+                "https://www.evergreenskateparks.com/malta-montana-skatepark",
+                "https://www.evergreenskateparks.com/milliken-colorado-skatepark",
+                "https://www.evergreenskateparks.com/missouri-city-texas-skatepark",
+                "https://www.evergreenskateparks.com/ride-it-sculpture-park-phase-3",
+                "https://www.evergreenskateparks.com/scott-carpenter-boulder-colorado",
+                "https://www.evergreenskateparks.com/sterling-heights",
+                "https://www.evergreenskateparks.com/stevensville-montana-skatepark",
+                "https://www.evergreenskateparks.com/sturtevant-wisconsin-skatepark",
+                "https://www.evergreenskateparks.com/sunnyside-washington",
+                "https://www.evergreenskateparks.com/superior-montana-skatepark",
+                "https://www.evergreenskateparks.com/taylor-texas-skatepark",
+                "https://www.evergreenskateparks.com/library-boulder-colorado",
+                "https://www.evergreenskateparks.com/thunder-park-browning-montana",
+                "https://www.evergreenskateparks.com/valmont-boulder-colorado",
+                "https://www.evergreenskateparks.com/vernon-hills-illinois-skatepark",
+                "https://www.evergreenskateparks.com/villa-park-illinois-skatepark",
+                "https://www.evergreenskateparks.com/watertown-skatepark",
+                "https://www.evergreenskateparks.com/weirdo-bowl",
+                "https://www.evergreenskateparks.com/wolf-point-montana-skatepark",
+                "https://www.evergreenskateparks.com/woodward-tahoe-skatepark"
+        };
+        List<String[]> results = new ArrayList<>();
+        By nameBy = By.xpath("//h1");
+        By slideBy = By.xpath("//div[contains(@class,'slide content-fit')]/img");
+        for(String park : parks) {
+            String name="n/a";
+            List<String> images= new ArrayList<String>();
+            driver.get(park);
+            if(isElementPresent(nameBy)) {
+                WebElement we = driver.findElement(nameBy);
+                name = we.getText();
+            }
+            if(isElementPresent(slideBy)) {
+                List<WebElement> wes = driver.findElements(slideBy);
+                for(WebElement we : wes) {
+                    String url = we.getAttribute("src");
+                    images.add(url);
+                }
+            }
+            // put each image in an array and follow it up with size
+            String[] imageArray = images.toArray(new String[0]);
+            String[] newArray = new String[imageArray.length + 2];
+            System.arraycopy(imageArray, 0, newArray, 0, imageArray.length);
+            newArray[newArray.length - 1] = newArray[0];
+            newArray[newArray.length - 2] = newArray[1];
+            newArray[0] = name;
+            newArray[1] = park;
+            results.add(newArray);
+        }
+        WriteContentsToWebPage(results, "evergreen");
+    }
+    
     public void WriteContentsToWebPage(List<String[]> results, String report) throws Exception
     {
         String fileName = "index" + report + ".htm";
@@ -156,7 +266,7 @@ public class SkateParks extends BaseTest {
             for (String[] entry : results) {
                 writer.println("<tr>");
                 for(String cell : entry) {
-                    if(cell.endsWith("jpg"))
+                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png"))
                         writer.println("<td><img width='300' height='200' src='" + cell + "'></td>");
                     else
                         writer.println("<td>" + cell + "</td>");
