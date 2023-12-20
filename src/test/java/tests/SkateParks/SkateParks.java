@@ -256,7 +256,65 @@ public class SkateParks extends BaseTest {
         }
         WriteContentsToWebPage(results, "evergreen");
     }
-    
+
+    @Test
+    public void Fsr() throws Exception{
+        driver.get("https://fsrbeton.dk/projekter/");
+        List<WebElement> webelementparks = driver.findElements(By.xpath("//a[@class='wpgb-card-layer-link']"));
+        List<String> parks = new ArrayList<String>();
+        for(WebElement we: webelementparks) {
+            String url = we.getAttribute("href");
+            parks.add(url);
+        }
+        List<String[]> results = new ArrayList<>();
+        By nameBy = By.xpath("//h1[contains(@id,'headline')]");
+        By addressBy = By.xpath("//div[contains(@class,'skatepark-adress')]/span");
+        By sizeBy = By.xpath("//div[contains(text(),'Størrelse')]/../div[3]/span");
+        By slideBy = By.xpath("//div[contains(@class,'swiper-slide')]//img");
+        int incrementer=0;
+        for(String park : parks) {
+            String name="no name";
+            String address="no address";
+            String size="no size";
+            List<String> images= new ArrayList<String>();
+            driver.get(park);
+            if(isElementPresent(nameBy)) {
+                WebElement we = driver.findElement(nameBy);
+                name = we.getText();
+            }
+            if(isElementPresent(addressBy)) {
+                WebElement we = driver.findElement(addressBy);
+                address = we.getText();
+            }
+            if(isElementPresent(sizeBy)) {
+                WebElement we = driver.findElement(sizeBy);
+                size = we.getText();
+            }
+            if(isElementPresent(slideBy)) {
+                List<WebElement> wes = driver.findElements(slideBy);
+                for(WebElement we : wes) {
+                    String url = we.getAttribute("src");
+                    images.add(url);
+                }
+            }
+            // put each image in an array with its name address size and park/url
+            String[] imageArray = images.toArray(new String[0]);
+            String[] newArray = new String[imageArray.length + 4];
+            System.arraycopy(imageArray, 0, newArray, 0, imageArray.length);
+            newArray[newArray.length - 1] = newArray[0];
+            newArray[newArray.length - 2] = newArray[1];
+            newArray[newArray.length - 3] = newArray[2];
+            newArray[newArray.length - 4] = newArray[3];
+            newArray[0] = name;
+            newArray[1] = address;
+            newArray[2] = size;
+            newArray[3] = park;
+            results.add(newArray);
+            if(++incrementer>1);
+        }
+        WriteContentsToWebPage(results, "fsr");
+    }
+
     public void WriteContentsToWebPage(List<String[]> results, String report) throws Exception
     {
         String fileName = "index" + report + ".htm";
@@ -266,8 +324,8 @@ public class SkateParks extends BaseTest {
             for (String[] entry : results) {
                 writer.println("<tr>");
                 for(String cell : entry) {
-                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png"))
-                        writer.println("<td><img width='300' height='200' src='" + cell + "'></td>");
+                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png") || cell.toLowerCase().endsWith("webp"))
+                        writer.println("<td><img width='300' height='200' src='" + cell + "'><br />"+ cell + "</td>");
                     else
                         writer.println("<td>" + cell + "</td>");
                 }
@@ -286,7 +344,7 @@ public class SkateParks extends BaseTest {
     protected static String HtmlReportHeader(String titleHeaderString) {
         StringBuilder returnString = new StringBuilder();
 
-        String jQueryInclude = "<script src=\"jquery-1.12.2.min\"></script>";
+        String jQueryInclude = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>";
 
         // standard header
         returnString.append("<html><head>");
@@ -299,7 +357,8 @@ public class SkateParks extends BaseTest {
         returnString.append("table td, table th {border: 1px solid black;text-align:left;vertical-align:top;}");
         returnString.append(".warning {background-color:#C0C0C0;color:#FFFF00;}");
         returnString.append(".severe {background-color:#C0C0C0;color:#FF0000;}");
-        returnString.append(".info {background-color:#C0C0C0;color:#000000;}").append("</style>").append("</head>");
+        returnString.append(".info {background-color:#C0C0C0;color:#000000;}").append("</style>");
+        returnString.append("</head>");
         returnString.append("<body><b>");
         returnString.append(titleHeaderString);
         returnString.append("</b>");
