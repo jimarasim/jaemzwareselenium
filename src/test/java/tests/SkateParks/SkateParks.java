@@ -8,13 +8,34 @@ import org.testng.annotations.Test;
 import tests.BaseTest;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class SkateParks extends BaseTest {
 
+    @Test
+    public void Newline() throws Exception{
+        String destination = "https://www.newlineskateparks.com/projects/?all=1";
+        String linksXpath = "//div[@id='myposts']//a";
+        driver.get(destination);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(linksXpath)));
+        List<WebElement> webElements = driver.findElements(By.xpath(linksXpath));
+        List<String> urls = new ArrayList<>();
+        for(WebElement we : webElements) {
+            urls.add(we.getAttribute("href"));
+        }
+        List<String[]> results = new ArrayList<>();
+        for(String url : urls) {
+            driver.navigate().to(url);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='intro-text']//h3")));
+            String city = getTextIfElementExists("//div[@class='intro-text']//h3");
+            String name = getTextIfElementExists("//div[@class='intro-text']//h2");
+            List<String> images = getAttributesIfElementsExist("//div[contains(@class,'masonry-item')]//img","src");
+            String image = String.join(" ", images);
+            results.add(new String[] { name, city, url, image});
+        }
+        WriteContentsToWebPage(results, "newline");
+    }
     @Test
     public void TeamPain() throws Exception{
         String destination = "https://teampain.com/project-type/concrete/";
@@ -324,8 +345,13 @@ public class SkateParks extends BaseTest {
             for (String[] entry : results) {
                 writer.println("<tr>");
                 for(String cell : entry) {
-                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png") || cell.toLowerCase().endsWith("webp"))
-                        writer.println("<td><img width='300' height='200' src='" + cell + "'><br />"+ cell + "</td>");
+                    //MULTPILE IMAGES SUPPORTED WHEN PASSED AS A STRING OF IMAGE URLS SEPARATED BY SPACES AND ENDING WITH AN IMAGE EXTENSION (SEE NEWLINE AND getAttributesIfElementsExist)
+                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png") || cell.toLowerCase().endsWith("webp")) {
+                        List<String> images = Arrays.asList(cell.split("\\s+"));
+                        images.forEach(image -> writer.println("<td><a target='_blank' href='"+image+"'><img width='300' height='200' src='" + image + "'></a></td>"));
+                    } else if (cell.toLowerCase().startsWith("http://") || cell.toLowerCase().startsWith("https://")) {
+                        writer.println("<td><a target='_blank' href='"+cell+"'>" + cell + "</a></td>");
+                    }
                     else
                         writer.println("<td>" + cell + "</td>");
                 }

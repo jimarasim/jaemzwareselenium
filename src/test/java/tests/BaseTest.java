@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BaseTest {
     protected WebDriver driver = null;
@@ -181,6 +183,20 @@ public class BaseTest {
             return we.getAttribute(attribute);
         } catch (Exception ex) {
             return "N/A";
+        }
+    }
+
+    protected List<String> getAttributesIfElementsExist(String xpath, String attribute) {
+        List<String> srcs = new ArrayList<>();
+        try {
+            List<WebElement> wes = driver.findElements(By.xpath(xpath));
+            srcs = new ArrayList<>();
+            for(WebElement we : wes) {
+                srcs.add(we.getAttribute(attribute));
+            }
+            return srcs;
+        } catch (Exception ex) {
+            return srcs;
         }
     }
 
