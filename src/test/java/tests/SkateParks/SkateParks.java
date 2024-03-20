@@ -28,11 +28,13 @@ public class SkateParks extends BaseTest {
         for(String url : urls) {
             driver.navigate().to(url);
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='intro-text']//h3")));
-            String city = getTextIfElementExists("//div[@class='intro-text']//h3");
+//            String city = getTextIfElementExists("//div[@class='intro-text']//h3");
             String name = getTextIfElementExists("//div[@class='intro-text']//h2");
-            List<String> images = getAttributesIfElementsExist("//div[contains(@class,'masonry-item')]//img","src");
-            String image = String.join(" ", images);
-            results.add(new String[] { name, city, url, image});
+            String googlemap = getAttributeIfElementExists("//iframe[contains(@src,'https://www.google.com/maps')]", "src");
+//            List<String> images = getAttributesIfElementsExist("//div[contains(@class,'masonry-item')]//img","src");
+//            String image = String.join(" ", images);
+//            results.add(new String[] { name, googlemap, city, url, image});
+            results.add(new String[] { name, googlemap});
         }
         WriteContentsToWebPage(results, "newline");
     }
@@ -346,10 +348,10 @@ public class SkateParks extends BaseTest {
                 writer.println("<tr>");
                 for(String cell : entry) {
                     //MULTPILE IMAGES SUPPORTED WHEN PASSED AS A STRING OF IMAGE URLS SEPARATED BY SPACES AND ENDING WITH AN IMAGE EXTENSION (SEE NEWLINE AND getAttributesIfElementsExist)
-                    if(cell.toLowerCase().endsWith("jpg") || cell.toLowerCase().endsWith("jpeg") || cell.toLowerCase().endsWith("png") || cell.toLowerCase().endsWith("webp")) {
+                    if(cell.trim().toLowerCase().endsWith("jpg") || cell.trim().toLowerCase().endsWith("jpeg") || cell.trim().toLowerCase().endsWith("png") || cell.trim().toLowerCase().endsWith("webp")) {
                         List<String> images = Arrays.asList(cell.split("\\s+"));
                         images.forEach(image -> writer.println("<td><a target='_blank' href='"+image+"'><img width='300' height='200' src='" + image + "'></a></td>"));
-                    } else if (cell.toLowerCase().startsWith("http://") || cell.toLowerCase().startsWith("https://")) {
+                    } else if (cell.trim().toLowerCase().startsWith("http://") || cell.trim().toLowerCase().startsWith("https://")) {
                         writer.println("<td><a target='_blank' href='"+cell+"'>" + cell + "</a></td>");
                     }
                     else
@@ -384,6 +386,7 @@ public class SkateParks extends BaseTest {
         returnString.append(".warning {background-color:#C0C0C0;color:#FFFF00;}");
         returnString.append(".severe {background-color:#C0C0C0;color:#FF0000;}");
         returnString.append(".info {background-color:#C0C0C0;color:#000000;}").append("</style>");
+        returnString.append("<script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>");
         returnString.append("</head>");
         returnString.append("<body><b>");
         returnString.append(titleHeaderString);
