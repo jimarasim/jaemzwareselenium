@@ -26,14 +26,13 @@ import java.util.List;
 
 public class BaseTest {
     protected WebDriver driver = null;
+    protected ChromeOptions options = new ChromeOptions();
     @BeforeClass
     public void setup(){
+        options.addArguments("--mute-audio");
         String browser = System.getProperty("browser"); //passed through maven with -Dbrowser
         if (browser==null || browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "./binaries/chromedriver");
-            ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--headless");  // Enable headless mode
-            options.addArguments("--mute-audio");
             driver = new ChromeDriver(options);
         } else if (browser.equals("safari")){
             driver = new SafariDriver();

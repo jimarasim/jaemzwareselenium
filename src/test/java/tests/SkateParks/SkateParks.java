@@ -1,7 +1,10 @@
 package tests.SkateParks;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -11,6 +14,41 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class SkateParks extends BaseTest {
+
+    @Test
+    public void TnaBoard() throws Exception{
+        String destination = "https://www.tnaboard.com/community/forums/wa-provider-posts.98/";
+        String linksXpath = "//div[@class='structItem-title']/a[last()]";
+        driver.get(destination);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(linksXpath)));
+        List<WebElement> webElements = driver.findElements(By.xpath(linksXpath));
+        List<String> urls = new ArrayList<>();
+        for(WebElement we : webElements) {
+            urls.add(we.getAttribute("href"));
+        }
+        List<String[]> results = new ArrayList<>();
+        int debugbreak = 0;
+        for(String url : urls) {
+            driver.quit();
+            driver = new ChromeDriver(options);
+            driver.get(url);
+            String name = getTextIfElementExists("//h1");
+//            String location = getTextIfElementExists("//div[@class='portfolio-details-location']/h5");
+//            String geocodeurl = getAttributeIfElementExists("//iframe[contains(@src,'google.com/maps')]", "src");
+//            String address = getTextIfElementExists("//p[contains(text(),'ADDRESS:')]");
+//            String subtext = getTextIfElementExists("//div[@id='content']");
+//            String size = getTextIfElementExists("//div[@class='portfolio-details-size']/h5");
+            List<String> images = getAttributesIfElementsExist("//article[contains(@class,'message-body')]//img[not(contains(@class,'emoji'))] | //a[contains(@class,'file-preview')]/img","src");
+            String image = String.join(" ", images);
+//            results.add(new String[] { name, location, geocodeurl, address, size, url, image});
+//            results.add(new String[] { name, location, url, size, address, geocodeurl, subtext});
+            results.add(new String[] { name, url, image});
+//            if(++debugbreak > 1)
+//                break;
+        }
+        WriteContentsToWebPage(results, "tnaboard");
+    }
 
     @Test
     public void SpohnRanch() throws Exception{
@@ -383,7 +421,7 @@ public class SkateParks extends BaseTest {
                 writer.println("<tr>");
                 for(String cell : entry) {
                     //MULTPILE IMAGES SUPPORTED WHEN PASSED AS A STRING OF IMAGE URLS SEPARATED BY SPACES AND ENDING WITH AN IMAGE EXTENSION (SEE NEWLINE AND getAttributesIfElementsExist)
-                    if(cell.trim().toLowerCase().endsWith("jpg") || cell.trim().toLowerCase().endsWith("jpeg") || cell.trim().toLowerCase().endsWith("png") || cell.trim().toLowerCase().endsWith("webp")) {
+                    if(cell.trim().toLowerCase().contains("jpg") || cell.trim().toLowerCase().contains("jpeg") || cell.trim().toLowerCase().contains("png") || cell.trim().toLowerCase().contains("webp")) {
                         List<String> images = Arrays.asList(cell.split("\\s+"));
                         images.forEach(image -> writer.println("<td><a target='_blank' href='"+image+"'><img width='300' height='200' src='" + image + "'></a>|</td>"));
                     } else if (cell.trim().toLowerCase().startsWith("http://") || cell.trim().toLowerCase().startsWith("https://")) {
