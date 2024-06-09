@@ -13,6 +13,41 @@ import java.util.*;
 public class SkateParks extends BaseTest {
 
     @Test
+    public void SpohnRanch() throws Exception{
+        String destination = "https://www.spohnranch.com/skatepark-design-build-portfolio/";
+        String linksXpath = "//h3/a";
+        driver.get(destination);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(linksXpath)));
+        List<WebElement> webElements = driver.findElements(By.xpath(linksXpath));
+        List<String> urls = new ArrayList<>();
+        for(WebElement we : webElements) {
+            urls.add(we.getAttribute("href"));
+        }
+        List<String[]> results = new ArrayList<>();
+        int debugbreak = 0;
+        for(String url : urls) {
+            driver.navigate().to(url);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='portfolio-details-title']/h5")));
+            String name = getTextIfElementExists("//div[@class='portfolio-details-title']/h5");
+//            String location = getTextIfElementExists("//div[@class='portfolio-details-location']/h5");
+//            String geocodeurl = getAttributeIfElementExists("//iframe[contains(@src,'google.com/maps')]", "src");
+//            String address = getTextIfElementExists("//p[contains(text(),'ADDRESS:')]");
+//            String subtext = getTextIfElementExists("//div[@id='content']");
+//            String size = getTextIfElementExists("//div[@class='portfolio-details-size']/h5");
+            List<String> images = getAttributesIfElementsExist("//ul[@class='slides']/li/img","src");
+            String image = String.join(" ", images);
+//            results.add(new String[] { name, location, geocodeurl, address, size, url, image});
+//            results.add(new String[] { name, location, url, size, address, geocodeurl, subtext});
+            results.add(new String[] { name, url, image});
+
+//            if(++debugbreak > 5)
+//                break;
+        }
+        WriteContentsToWebPage(results, "spohnranch");
+    }
+
+    @Test
     public void Newline() throws Exception{
         String destination = "https://www.newlineskateparks.com/projects/?all=1";
         String linksXpath = "//div[@id='myposts']//a";
@@ -350,12 +385,12 @@ public class SkateParks extends BaseTest {
                     //MULTPILE IMAGES SUPPORTED WHEN PASSED AS A STRING OF IMAGE URLS SEPARATED BY SPACES AND ENDING WITH AN IMAGE EXTENSION (SEE NEWLINE AND getAttributesIfElementsExist)
                     if(cell.trim().toLowerCase().endsWith("jpg") || cell.trim().toLowerCase().endsWith("jpeg") || cell.trim().toLowerCase().endsWith("png") || cell.trim().toLowerCase().endsWith("webp")) {
                         List<String> images = Arrays.asList(cell.split("\\s+"));
-                        images.forEach(image -> writer.println("<td><a target='_blank' href='"+image+"'><img width='300' height='200' src='" + image + "'></a></td>"));
+                        images.forEach(image -> writer.println("<td><a target='_blank' href='"+image+"'><img width='300' height='200' src='" + image + "'></a>|</td>"));
                     } else if (cell.trim().toLowerCase().startsWith("http://") || cell.trim().toLowerCase().startsWith("https://")) {
-                        writer.println("<td><a target='_blank' href='"+cell+"'>" + cell + "</a></td>");
+                        writer.println("<td><a target='_blank' href='"+cell+"'>" + cell + "</a>|</td>");
                     }
                     else
-                        writer.println("<td>" + cell + "</td>");
+                        writer.println("<td>" + cell + "|</td>");
                 }
                 writer.println("</tr>");
             }
